@@ -27,6 +27,17 @@ export const defaultDevices: Device[] = [
     type: 'computer'
   },
   {
+    id: 'device-hub',
+    name: 'Network Hub',
+    ip: '192.168.1.1',
+    mac: 'FF:FF:FF:FF:FF:FF',
+    x: 300,
+    y: 280,
+    isActive: false,
+    isOnline: true,
+    type: 'hub'
+  },
+  {
     id: 'device-2',
     name: 'Beta Station',
     ip: '192.168.1.20',
