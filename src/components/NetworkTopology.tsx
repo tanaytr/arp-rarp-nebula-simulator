@@ -60,13 +60,11 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
       const deviceCenterY = device.y! + 48;
       const isActive = selectedDevice?.id === device.id || animatingDevice?.id === device.id;
       
-      const isActive = selectedDevice?.id === device.id || animatingDevice?.id === device.id;
-      
       connections.push(
         <motion.line
           key={`connection-${device.id}`}
-          x1={x}
-          y1={y}
+          x1={deviceCenterX}
+          y1={deviceCenterY}
           x2={centerX}
           y2={centerY}
           stroke={isActive ? "url(#activeConnectionGradient)" : "url(#connectionGradient)"}
