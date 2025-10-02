@@ -20,13 +20,15 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
   className = ''
 }) => {
   const calculateDevicePositions = () => {
-    // Use container dimensions instead of fixed values
-    const container = document.querySelector('.network-container');
-    const boxWidth = container?.clientWidth || window.innerWidth;
-    const boxHeight = container?.clientHeight || window.innerHeight * 0.7;
+    const boxWidth = window.innerWidth;
+    const boxHeight = Math.max(window.innerHeight * 0.7, 600);
     const centerX = boxWidth / 2;
     const centerY = boxHeight / 2;
     const deviceOffset = 48; // Half of device width/height for centering
+    
+    // Calculate radius based on screen size
+    const minDimension = Math.min(boxWidth, boxHeight);
+    const radius = minDimension * 0.35; // 35% of the smaller dimension
 
     // Find hub and computers
     const hub = devices.find(d => d.type === 'hub');
@@ -39,13 +41,17 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
     }
 
     // Place computers in a circle with proper spacing
-    const radius = Math.min(boxWidth, boxHeight) * 0.35; // 35% of the smaller dimension
     computers.forEach((device, index) => {
-      const angle = (index * 2 * Math.PI) / computers.length - Math.PI / 2; // Start from top
-      const x = centerX + radius * Math.cos(angle);
-      const y = centerY + radius * Math.sin(angle);
+      // Start angle from top and distribute evenly
+      const angle = (index * 2 * Math.PI) / computers.length - Math.PI / 2;
+      // Add slight random variation to radius for natural look
+      const deviceRadius = radius * (0.95 + Math.random() * 0.1);
+      
+      const x = centerX + deviceRadius * Math.cos(angle);
+      const y = centerY + deviceRadius * Math.sin(angle);
 
-      device.x = Math.round(x - deviceOffset); // Round for pixel-perfect positioning
+      // Round positions for pixel-perfect alignment
+      device.x = Math.round(x - deviceOffset);
       device.y = Math.round(y - deviceOffset);
     });
 
@@ -70,23 +76,29 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
           x2={centerX}
           y2={centerY}
           stroke={isActive ? "url(#activeConnectionGradient)" : "url(#connectionGradient)"}
-          strokeWidth={isActive ? "6" : "3"}
+          strokeWidth={isActive ? "8" : "3"}
           strokeDasharray={isActive ? "none" : "8,8"}
           filter={isActive ? "url(#glow)" : "none"}
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ 
             pathLength: 1,
-            opacity: isActive ? 1 : 0.5,
-            strokeDashoffset: isActive ? [-100, 0] : 0
+            opacity: isActive ? 1 : 0.3,
+            strokeDashoffset: isActive ? [-100, 0] : 0,
+            strokeWidth: isActive ? [8, 12, 8] : 3
           }}
           transition={{ 
             duration: isActive ? 0.8 : 1.2,
             delay: index * 0.1,
             ease: "easeOut",
             strokeDashoffset: {
-              duration: 8,
+              duration: 6,
               repeat: Infinity,
               ease: "linear"
+            },
+            strokeWidth: {
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut"
             }
           }}
         />
