@@ -1,0 +1,59 @@
+.network-container {
+  width: 100vw;
+  height: 70vh;
+  min-height: 600px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+}
+
+.control-section {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.device-pod {
+  position: absolute;
+  transition: all 0.3s ease-in-out;
+}
+
+.active-connection {
+  animation: pulseConnection 2s infinite;
+}
+
+@keyframes pulseConnection {
+  0%, 100% {
+    opacity: 0.5;
+    stroke-width: 3;
+  }
+  50% {
+    opacity: 1;
+    stroke-width: 6;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .network-container {
+    height: 60vh;
+    min-height: 400px;
+  }
+  
+  .control-section {
+    padding: 1rem;
+  }
+}
+
+/* Packet animation styles */
+.packet {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00ffff;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8));
+  z-index: 10;
+}

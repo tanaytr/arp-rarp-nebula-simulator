@@ -20,8 +20,10 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
   className = ''
 }) => {
   const calculateDevicePositions = () => {
-    const boxWidth = 600;
-    const boxHeight = 560;
+    // Use container dimensions instead of fixed values
+    const container = document.querySelector('.network-container');
+    const boxWidth = container?.clientWidth || window.innerWidth;
+    const boxHeight = container?.clientHeight || window.innerHeight * 0.7;
     const centerX = boxWidth / 2;
     const centerY = boxHeight / 2;
     const deviceOffset = 48; // Half of device width/height for centering
@@ -95,9 +97,9 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
   };
 
   return (
-    <div className={`relative w-full h-full ${className}`}>
+    <div className={`relative w-full h-full network-container ${className}`}>
       {/* Network SVG Overlay */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#00ffff" stopOpacity="0.3" />
