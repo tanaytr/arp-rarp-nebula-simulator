@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { fadeInUp, slideInLeft } from '../utils/animations';
+import { slideInLeft } from '../utils/animations';
 
 interface GuidanceBoxProps {
   title: string;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Packet } from '../types';
-import { packetAnimation, particleBurst } from '../utils/animations';
+import { packetAnimation } from '../utils/animations';
 
 interface PacketAnimationProps {
   packet: Packet;

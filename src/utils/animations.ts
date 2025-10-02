@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+// Animation utility functions for Framer Motion
 
 export const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -80,11 +80,6 @@ export const packetAnimation = {
 };
 
 export const networkPath = (startX: number, startY: number, endX: number, endY: number) => {
-  const midX = (startX + endX) / 2;
-  const midY = (startY + endY) / 2;
-  const controlX = midX + (Math.random() - 0.5) * 100;
-  const controlY = midY - 50;
-
   return {
     initial: { pathLength: 0, opacity: 0 },
     animate: { 
