@@ -19,16 +19,28 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
   animatingDevice,
   className = ''
 }) => {
+  // Update container size on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const container = document.querySelector('.network-content');
+      if (container) {
+        calculateDevicePositions();
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const calculateDevicePositions = () => {
-    const boxWidth = window.innerWidth;
-    const boxHeight = Math.max(window.innerHeight * 0.7, 600);
-    const centerX = boxWidth / 2;
-    const centerY = boxHeight / 2;
-    const deviceOffset = 48; // Half of device width/height for centering
+    const container = document.querySelector('.network-container');
+    const boxWidth = container?.clientWidth || window.innerWidth;
+    const boxHeight = container?.clientHeight || Math.max(window.innerHeight * 0.7, 600);
+    const centerX = Math.round(boxWidth / 2);
+    const centerY = Math.round(boxHeight / 2);
+    const deviceOffset = 40; // Half of device width/height for centering
     
-    // Calculate radius based on screen size
+    // Calculate radius based on container size
     const minDimension = Math.min(boxWidth, boxHeight);
-    const radius = minDimension * 0.35; // 35% of the smaller dimension
+    const radius = Math.round(minDimension * 0.3); // 30% of the smaller dimension for tighter grouping
 
     // Find hub and computers
     const hub = devices.find(d => d.type === 'hub');
@@ -43,12 +55,9 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
     // Place computers in a circle with proper spacing
     computers.forEach((device, index) => {
       // Start angle from top and distribute evenly
-      const angle = (index * 2 * Math.PI) / computers.length - Math.PI / 2;
-      // Add slight random variation to radius for natural look
-      const deviceRadius = radius * (0.95 + Math.random() * 0.1);
-      
-      const x = centerX + deviceRadius * Math.cos(angle);
-      const y = centerY + deviceRadius * Math.sin(angle);
+      const angle = ((index * 2 * Math.PI) / computers.length) + Math.PI / 2; // Start from bottom
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
 
       // Round positions for pixel-perfect alignment
       device.x = Math.round(x - deviceOffset);
@@ -76,29 +85,23 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
           x2={centerX}
           y2={centerY}
           stroke={isActive ? "url(#activeConnectionGradient)" : "url(#connectionGradient)"}
-          strokeWidth={isActive ? "8" : "3"}
-          strokeDasharray={isActive ? "none" : "8,8"}
+          strokeWidth={isActive ? "4" : "2"}
+          strokeDasharray={isActive ? "none" : "4,4"}
           filter={isActive ? "url(#glow)" : "none"}
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ 
             pathLength: 1,
-            opacity: isActive ? 1 : 0.3,
-            strokeDashoffset: isActive ? [-100, 0] : 0,
-            strokeWidth: isActive ? [8, 12, 8] : 3
+            opacity: isActive ? 1 : 0.4,
+            strokeDashoffset: isActive ? [-50, 0] : 0
           }}
           transition={{ 
-            duration: isActive ? 0.8 : 1.2,
+            duration: isActive ? 0.5 : 1,
             delay: index * 0.1,
             ease: "easeOut",
             strokeDashoffset: {
-              duration: 6,
+              duration: 2,
               repeat: Infinity,
               ease: "linear"
-            },
-            strokeWidth: {
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut"
             }
           }}
         />
@@ -109,9 +112,10 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
   };
 
   return (
-    <div className={`relative w-full h-full network-container ${className}`}>
-      {/* Network SVG Overlay */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+    <div className={`relative w-full h-full flex items-center justify-center ${className}`}>
+      <div className="network-content">
+        {/* Network SVG Overlay */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none">
         <defs>
           <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#00ffff" stopOpacity="0.3" />
