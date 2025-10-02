@@ -3,15 +3,7 @@ import { motion } from 'framer-motion';
 import { fadeInUp, scaleIn } from '../utils/animations';
 
 interface ControlPanelProps {
-  onModeSelect: (mode:              className={`
-              p-3 rounded-lg border-2 transition-all duration-300
-              ${button.color}
-              hover:shadow-lg backdrop-blur-sm
-              text-[10px] md:text-xs font-cyber font-bold
-              whitespace-nowrap overflow-hidden text-ellipsis
-              min-w-[80px] md:min-w-[100px]
-              disabled:opacity-50 disabled:cursor-not-allowed
-            `}| 'RARP') => void;
+  onModeSelect: (mode: 'ARP' | 'RARP') => void;
   onStartSimulation: () => void;
   onReset: () => void;
   onDatabaseAccess: () => void;
@@ -192,7 +184,9 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               p-3 rounded-lg border-2 transition-all duration-300
               ${button.color}
               hover:shadow-lg backdrop-blur-sm
-              text-xs md:text-sm font-cyber font-bold
+              text-[10px] md:text-xs font-cyber font-bold
+              whitespace-nowrap overflow-hidden text-ellipsis
+              min-w-[80px] md:min-w-[100px]
               disabled:opacity-50 disabled:cursor-not-allowed
             `}
             variants={scaleIn}
