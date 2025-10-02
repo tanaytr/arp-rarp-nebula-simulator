@@ -62,7 +62,7 @@ const GuidanceBox: React.FC<GuidanceBoxProps> = ({
 
   return (
     <motion.div
-      className={`fixed top-4 right-4 md:top-8 md:right-8 z-50 max-w-sm md:max-w-md ${className}`}
+      className={`fixed top-4 right-4 md:top-8 md:right-8 z-50 max-w-[90vw] md:max-w-md ${className}`}
       variants={slideInLeft}
       initial="initial"
       animate="animate"
@@ -75,6 +75,7 @@ const GuidanceBox: React.FC<GuidanceBoxProps> = ({
         ${styles.border} ${styles.bg}
         shadow-2xl ${styles.glow}
         font-cyber
+        break-words
       `}>
         {/* Holographic Background */}
         <div className="absolute inset-0 bg-cyber-grid bg-[size:15px_15px] opacity-5 rounded-xl" />
@@ -86,12 +87,12 @@ const GuidanceBox: React.FC<GuidanceBoxProps> = ({
               e.stopPropagation();
               onClose();
             }}
-            className="absolute top-2 left-2 w-8 h-8
+            className="absolute top-2 right-2 w-8 h-8
                        text-gray-400 hover:text-white
                        transition-colors duration-200
                        flex items-center justify-center
                        bg-gray-800/50 rounded-full
-                       hover:bg-red-500/20
+                       hover:bg-red-500/20 border border-gray-700
                        z-50"
             aria-label="Close guidance"
             whileHover={{ scale: 1.1 }}
@@ -102,17 +103,17 @@ const GuidanceBox: React.FC<GuidanceBoxProps> = ({
         )}
 
         {/* Header */}
-        <div className="flex items-center space-x-3 mb-3">
-          <div className="text-2xl">
+        <div className="flex items-center space-x-3 mb-3 pr-8">
+          <div className="text-2xl flex-shrink-0">
             {styles.icon}
           </div>
-          <h3 className={`text-lg md:text-xl font-bold ${styles.titleColor}`}>
+          <h3 className={`text-lg md:text-xl font-bold ${styles.titleColor} truncate`}>
             {title}
           </h3>
         </div>
 
         {/* Message */}
-        <div className="text-sm md:text-base text-gray-300 leading-relaxed">
+        <div className="text-sm md:text-base text-gray-300 leading-relaxed whitespace-pre-wrap">
           {message}
         </div>
 

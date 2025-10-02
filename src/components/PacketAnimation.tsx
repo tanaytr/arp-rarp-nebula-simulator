@@ -22,8 +22,8 @@ const PacketAnimation: React.FC<PacketAnimationProps> = ({
   onComplete,
   className = ''
 }) => {
-  const [progress, setProgress] = useState(0);
-  const [particles, setParticles] = useState<Array<{id: string, x: number, y: number}>>([]);
+  const [position, setPosition] = useState({ x: startX, y: startY });
+  const [showBurst, setShowBurst] = useState(false);
 
   const getPacketIcon = () => {
     switch (packet.type) {
@@ -37,21 +37,57 @@ const PacketAnimation: React.FC<PacketAnimationProps> = ({
 
   const getPacketColor = () => {
     switch (packet.type) {
-      case 'ARP_REQUEST': return 'border-cyber-blue bg-cyber-blue/20';
-      case 'ARP_REPLY': return 'border-cyber-green bg-cyber-green/20';
-      case 'RARP_REQUEST': return 'border-cyber-orange bg-cyber-orange/20';
-      case 'RARP_REPLY': return 'border-neon-pink bg-neon-pink/20';
-      default: return 'border-cyber-purple bg-cyber-purple/20';
+      case 'ARP_REQUEST': return {
+        border: 'border-cyber-blue',
+        bg: 'from-cyber-blue/20 to-cyber-purple/20',
+        glow: 'shadow-cyber-blue'
+      };
+      case 'ARP_REPLY': return {
+        border: 'border-cyber-green',
+        bg: 'from-cyber-green/20 to-cyber-blue/20',
+        glow: 'shadow-cyber-green'
+      };
+      case 'RARP_REQUEST': return {
+        border: 'border-cyber-orange',
+        bg: 'from-cyber-orange/20 to-cyber-purple/20',
+        glow: 'shadow-cyber-orange'
+      };
+      case 'RARP_REPLY': return {
+        border: 'border-neon-pink',
+        bg: 'from-neon-pink/20 to-cyber-purple/20',
+        glow: 'shadow-neon-pink'
+      };
+      default: return {
+        border: 'border-cyber-purple',
+        bg: 'from-cyber-purple/20 to-cyber-blue/20',
+        glow: 'shadow-cyber-purple'
+      };
     }
   };
 
   useEffect(() => {
-    const duration = 2000; // 2 seconds
-    const interval = setInterval(() => {
+    const animate = async () => {
+      const colors = getPacketColor();
+      await new Promise(resolve => setTimeout(resolve, 100)); // Small delay before animation starts
+      
+      // Animate to end position
+      const duration = 2000;
+      const startTime = Date.now();
+      
+      const animationInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          onComplete();
+          onAnimationComplete={() => {
+            // Add a burst effect before completion
+            const burst = document.createElement('div');
+            burst.className = 'absolute w-8 h-8 bg-cyber-blue rounded-full animate-ping';
+            burst.style.left = `${packetPosition.x}px`;
+            burst.style.top = `${packetPosition.y}px`;
+            document.body.appendChild(burst);
+            setTimeout(() => burst.remove(), 1000);
+            onComplete();
+          }}
           return 100;
         }
         return prev + 2;

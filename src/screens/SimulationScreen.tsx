@@ -38,12 +38,17 @@ const SimulationScreen: React.FC<SimulationScreenProps> = ({ onBackToTitle }) =>
   useEffect(() => {
     if (simulationState.isComplete) {
       setGuidanceMessage({
-        title: 'Simulation Complete',
-        message: 'The simulation has finished. You can:
-- View the ARP cache table
-- Check the activity log
-- Start a new simulation
-- Return to the title screen',
+        title: '🎉 Simulation Complete!',
+        message: `Great job! The simulation has finished successfully.
+
+What you can do next:
+• 📊 View the ARP cache table
+• 📝 Check the activity log for details
+• 🔄 Start a new simulation
+• 🏠 Return to the title screen
+
+Take a moment to review the results in the tables on the right.
+When you're ready, click anywhere or the X button to continue.`,
         type: 'success',
         isVisible: true
       });
@@ -72,6 +77,9 @@ const SimulationScreen: React.FC<SimulationScreenProps> = ({ onBackToTitle }) =>
   };
 
   const hideGuidance = () => {
+    if (simulationState.isComplete) {
+      setSimulationState(prev => ({ ...prev, isComplete: false }));
+    }
     setGuidanceMessage(prev => ({ ...prev, isVisible: false }));
   };
 
