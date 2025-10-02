@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Device } from '../types';
 import DevicePod from './DevicePod';
+import ConnectionGradients from './ActiveConnectionStyles';
 
 interface NetworkTopologyProps {
   devices: Device[];
@@ -22,22 +23,36 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
     const connections: JSX.Element[] = [];
     
     // Create a star topology with center hub positioned in the network box
-    const centerX = 300; // Fixed position in the network area
-    const centerY = 280; // Fixed position in the network area
-
+    const boxWidth = 600;
+    const boxHeight = 560;
+    const centerX = boxWidth / 2;
+    const centerY = boxHeight / 2;
+    
+    // Calculate positions in a circle around the hub
     devices.forEach((device, index) => {
+      const angle = (index * 2 * Math.PI) / devices.length;
+      const radius = Math.min(boxWidth, boxHeight) * 0.35; // 35% of the smaller dimension
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+      
+      // Update device position
+      device.x = x - 48; // Adjust for device width
+      device.y = y - 48; // Adjust for device height
+      
+      const isActive = selectedDevice?.id === device.id || animatingDevice?.id === device.id;
+      
       connections.push(
         <motion.line
           key={`connection-${device.id}`}
-          x1={device.x + 48} // Half of device width
-          y1={device.y + 48} // Half of device height
+          x1={x}
+          y1={y}
           x2={centerX}
           y2={centerY}
-          stroke="url(#connectionGradient)"
-          strokeWidth="2"
-          strokeDasharray="5,5"
+          stroke={isActive ? "url(#activeConnectionGradient)" : "url(#connectionGradient)"}
+          strokeWidth={isActive ? "3" : "2"}
+          strokeDasharray={isActive ? "none" : "5,5"}
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 0.6 }}
+          animate={{ pathLength: 1, opacity: isActive ? 0.8 : 0.4 }}
           transition={{ 
             duration: 1.5,
             delay: index * 0.2,

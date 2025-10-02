@@ -82,13 +82,17 @@ const GuidanceBox: React.FC<GuidanceBoxProps> = ({
         {/* Close Button */}
         {onClose && (
           <motion.button
-            onClick={onClose}
-            className="absolute top-2 right-2 w-6 h-6
-                       text-gray-400 hover:text-white hover:text-cyber-red
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
+            className="absolute top-2 left-2 w-8 h-8
+                       text-gray-400 hover:text-white
                        transition-colors duration-200
                        flex items-center justify-center
                        bg-gray-800/50 rounded-full
-                       hover:bg-red-500/20"
+                       hover:bg-red-500/20
+                       z-50"
             aria-label="Close guidance"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}

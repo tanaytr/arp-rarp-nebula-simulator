@@ -1,0 +1,57 @@
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .creator-info {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    z-index: 40;
+    backdrop-filter: blur(4px);
+  }
+
+  .button-text {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: inline-block;
+  }
+
+  .guidance-text {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}
+
+/* Fix button text alignment */
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+}
+
+.button-text {
+  text-align: center;
+  width: 100%;
+}
+
+/* Fix overlapping text in tables */
+.table-cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  padding: 0.5rem;
+}
+
+/* Add spacing between elements */
+.spacing-y > * + * {
+  margin-top: 1rem;
+}
