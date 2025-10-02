@@ -7,6 +7,7 @@ export interface Device {
   y: number;
   isActive: boolean;
   isOnline: boolean;
+  type: 'computer' | 'hub';
 }
 
 export interface Packet {
@@ -37,6 +38,7 @@ export interface SimulationState {
   currentMode: 'ARP' | 'RARP' | null;
   currentStep: number;
   isRunning: boolean;
+  isComplete: boolean;
   selectedDevice: Device | null;
   arpCache: ARPCache;
   packets: Packet[];

@@ -23,7 +23,8 @@ export const defaultDevices: Device[] = [
     x: 50,
     y: 80,
     isActive: false,
-    isOnline: true
+    isOnline: true,
+    type: 'computer'
   },
   {
     id: 'device-2',
@@ -33,7 +34,8 @@ export const defaultDevices: Device[] = [
     x: 50,
     y: 160,
     isActive: false,
-    isOnline: true
+    isOnline: true,
+    type: 'computer'
   },
   {
     id: 'device-3',
@@ -43,11 +45,13 @@ export const defaultDevices: Device[] = [
     x: 50,
     y: 240,
     isActive: false,
-    isOnline: true
+    isOnline: true,
+    type: 'computer'
   },
   {
     id: 'device-4',
     name: 'Delta Hub',
+    type: 'hub',
     ip: '192.168.1.40',
     mac: '77:88:99:AA:BB:CC',
     x: 50,
@@ -63,7 +67,8 @@ export const defaultDevices: Device[] = [
     x: 50,
     y: 400,
     isActive: false,
-    isOnline: true
+    isOnline: true,
+    type: 'computer'
   },
   {
     id: 'device-6',
@@ -73,7 +78,8 @@ export const defaultDevices: Device[] = [
     x: 50,
     y: 480,
     isActive: false,
-    isOnline: true
+    isOnline: true,
+    type: 'computer'
   }
 ];
 
@@ -111,7 +117,8 @@ export const generateRandomNebula = (): Device[] => {
       x,
       y,
       isActive: false,
-      isOnline: true
+      isOnline: true,
+      type: 'computer'
     });
   }
 
