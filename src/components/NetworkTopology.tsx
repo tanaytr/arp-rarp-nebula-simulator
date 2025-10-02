@@ -19,18 +19,65 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
   animatingDevice,
   className = ''
 }) => {
-  const renderConnectionLines = () => {
-    const connections: JSX.Element[] = [];
-    
-    // Create a star topology with center hub positioned in the network box
+  const calculateDevicePositions = () => {
     const boxWidth = 600;
     const boxHeight = 560;
     const centerX = boxWidth / 2;
     const centerY = boxHeight / 2;
+
+    // Find hub and computers
+    const hub = devices.find(d => d.type === 'hub');
+    const computers = devices.filter(d => d.type === 'computer');
+
+    // Place hub in the center
+    if (hub) {
+      hub.x = centerX - 48;
+      hub.y = centerY - 48;
+    }
+
+    // Place computers in a circle
+    computers.forEach((device, index) => {
+      const angle = (index * 2 * Math.PI) / computers.length;
+      const radius = Math.min(boxWidth, boxHeight) * 0.35;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+
+      device.x = x - 48;
+      device.y = y - 48;
+    });
+  };
+
+  const renderConnectionLines = () => {
+    calculateDevicePositions();
+    const connections: JSX.Element[] = [];
+
+    // Find the hub device
+    const hub = devices.find(d => d.type === 'hub');
+    const computers = devices.filter(d => d.type === 'computer');
     
-    // Calculate positions in a circle around the hub
-    devices.forEach((device, index) => {
-      const angle = (index * 2 * Math.PI) / devices.length;
+    // Place hub in the center
+    if (hub) {
+      hub.x = centerX - 48;
+      hub.y = centerY - 48;
+    }
+
+    // Find the hub device
+    const hub = devices.find(d => d.type === 'hub');
+    
+    // Place hub in the center
+    if (hub) {
+      hub.x = centerX - 48; // Adjust for device width
+      hub.y = centerY - 48; // Adjust for device height
+    }
+
+    // Calculate positions for computers in a circle around the hub
+    const computers = devices.filter(d => d.type === 'computer');
+    computers.forEach((device, index) => {
+    
+    // Calculate positions for computers in a circle around the hub
+    const computers = devices.filter(d => d.type === 'computer');
+    computers.forEach((device, index) => {
+      const angle = (index * 2 * Math.PI) / computers.length;
       const radius = Math.min(boxWidth, boxHeight) * 0.35; // 35% of the smaller dimension
       const x = centerX + radius * Math.cos(angle);
       const y = centerY + radius * Math.sin(angle);

@@ -4,6 +4,7 @@ import TitleScreen from './screens/TitleScreen';
 import SimulationScreen from './screens/SimulationScreen';
 import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
+import './styles/responsive.css';
 
 type Screen = 'title' | 'simulation';
 

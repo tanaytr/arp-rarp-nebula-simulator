@@ -8,6 +8,7 @@ export interface Device {
   isActive: boolean;
   isOnline: boolean;
   type: 'computer' | 'hub';
+  type: 'computer' | 'hub';
 }
 
 export interface Packet {

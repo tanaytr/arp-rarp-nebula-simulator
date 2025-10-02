@@ -27,11 +27,28 @@ const SimulationScreen: React.FC<SimulationScreenProps> = ({ onBackToTitle }) =>
     currentMode: null,
     currentStep: 0,
     isRunning: false,
+    isComplete: false,
     selectedDevice: null,
     arpCache: {},
     packets: [],
     steps: []
   });
+
+  // Handle post-simulation state
+  useEffect(() => {
+    if (simulationState.isComplete) {
+      setGuidanceMessage({
+        title: 'Simulation Complete',
+        message: 'The simulation has finished. You can:
+- View the ARP cache table
+- Check the activity log
+- Start a new simulation
+- Return to the title screen',
+        type: 'success',
+        isVisible: true
+      });
+    }
+  }, [simulationState.isComplete]);
   const [showDatabase, setShowDatabase] = useState(false);
   const [guidanceMessage, setGuidanceMessage] = useState<{
     title: string;
