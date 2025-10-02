@@ -181,12 +181,13 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             key={button.id}
             onClick={button.action}
             className={`
-              p-3 rounded-lg border-2 transition-all duration-300
+              p-4 rounded-lg border-2 transition-all duration-300
               ${button.color}
               hover:shadow-lg backdrop-blur-sm
-              text-[10px] md:text-xs font-cyber font-bold
-              whitespace-nowrap overflow-hidden text-ellipsis
-              min-w-[80px] md:min-w-[100px]
+              text-xs md:text-sm font-cyber font-bold
+              whitespace-normal
+              min-h-[64px] min-w-[90px] md:min-w-[120px]
+              flex flex-col items-center justify-center gap-1
               disabled:opacity-50 disabled:cursor-not-allowed
             `}
             variants={scaleIn}

@@ -36,15 +36,15 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
       hub.y = centerY - deviceOffset;
     }
 
-    // Place computers in a circle with more spacing
-    const radius = Math.min(boxWidth, boxHeight) * 0.4; // 40% of the smaller dimension
+    // Place computers in a circle with proper spacing
+    const radius = Math.min(boxWidth, boxHeight) * 0.35; // 35% of the smaller dimension
     computers.forEach((device, index) => {
       const angle = (index * 2 * Math.PI) / computers.length - Math.PI / 2; // Start from top
       const x = centerX + radius * Math.cos(angle);
       const y = centerY + radius * Math.sin(angle);
 
-      device.x = x - deviceOffset;
-      device.y = y - deviceOffset;
+      device.x = Math.round(x - deviceOffset); // Round for pixel-perfect positioning
+      device.y = Math.round(y - deviceOffset);
     });
 
     return { centerX, centerY, computers, hub };
@@ -68,21 +68,21 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
           x2={centerX}
           y2={centerY}
           stroke={isActive ? "url(#activeConnectionGradient)" : "url(#connectionGradient)"}
-          strokeWidth={isActive ? "4" : "2"}
-          strokeDasharray={isActive ? "none" : "5,5"}
+          strokeWidth={isActive ? "6" : "3"}
+          strokeDasharray={isActive ? "none" : "8,8"}
           filter={isActive ? "url(#glow)" : "none"}
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ 
             pathLength: 1,
-            opacity: isActive ? 1 : 0.4,
-            strokeDashoffset: isActive ? [0, 100] : 0
+            opacity: isActive ? 1 : 0.5,
+            strokeDashoffset: isActive ? [-100, 0] : 0
           }}
           transition={{ 
-            duration: isActive ? 1.5 : 1,
-            delay: index * 0.2,
-            ease: "easeInOut",
+            duration: isActive ? 0.8 : 1.2,
+            delay: index * 0.1,
+            ease: "easeOut",
             strokeDashoffset: {
-              duration: 20,
+              duration: 8,
               repeat: Infinity,
               ease: "linear"
             }
@@ -99,10 +99,10 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
       {/* Network SVG Overlay */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none">
         <defs>
-          <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#00ffff" stopOpacity="0" />
-            <stop offset="50%" stopColor="#00ffff" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#ff00ff" stopOpacity="0" />
+          <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#00ffff" stopOpacity="0.3" />
+            <stop offset="50%" stopColor="#00ffff" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#00ffff" stopOpacity="0.3" />
           </linearGradient>
           <linearGradient id="interConnectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#00ff00" stopOpacity="0" />
