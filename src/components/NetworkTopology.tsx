@@ -24,6 +24,7 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
     const boxHeight = 560;
     const centerX = boxWidth / 2;
     const centerY = boxHeight / 2;
+    const deviceOffset = 48; // Half of device width/height for centering
 
     // Find hub and computers
     const hub = devices.find(d => d.type === 'hub');
@@ -31,60 +32,33 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
 
     // Place hub in the center
     if (hub) {
-      hub.x = centerX - 48;
-      hub.y = centerY - 48;
+      hub.x = centerX - deviceOffset;
+      hub.y = centerY - deviceOffset;
     }
 
     // Place computers in a circle
+    const radius = Math.min(boxWidth, boxHeight) * 0.35; // 35% of the smaller dimension
     computers.forEach((device, index) => {
-      const angle = (index * 2 * Math.PI) / computers.length;
-      const radius = Math.min(boxWidth, boxHeight) * 0.35;
+      const angle = (index * 2 * Math.PI) / computers.length - Math.PI / 2; // Start from top
       const x = centerX + radius * Math.cos(angle);
       const y = centerY + radius * Math.sin(angle);
 
-      device.x = x - 48;
-      device.y = y - 48;
+      device.x = x - deviceOffset;
+      device.y = y - deviceOffset;
     });
+
+    return { centerX, centerY, computers, hub };
   };
 
   const renderConnectionLines = () => {
-    calculateDevicePositions();
+    const { centerX, centerY, computers } = calculateDevicePositions();
     const connections: JSX.Element[] = [];
 
-    // Find the hub device
-    const hub = devices.find(d => d.type === 'hub');
-    const computers = devices.filter(d => d.type === 'computer');
-    
-    // Place hub in the center
-    if (hub) {
-      hub.x = centerX - 48;
-      hub.y = centerY - 48;
-    }
-
-    // Find the hub device
-    const hub = devices.find(d => d.type === 'hub');
-    
-    // Place hub in the center
-    if (hub) {
-      hub.x = centerX - 48; // Adjust for device width
-      hub.y = centerY - 48; // Adjust for device height
-    }
-
-    // Calculate positions for computers in a circle around the hub
-    const computers = devices.filter(d => d.type === 'computer');
+    // Draw connections from each computer to the hub
     computers.forEach((device, index) => {
-    
-    // Calculate positions for computers in a circle around the hub
-    const computers = devices.filter(d => d.type === 'computer');
-    computers.forEach((device, index) => {
-      const angle = (index * 2 * Math.PI) / computers.length;
-      const radius = Math.min(boxWidth, boxHeight) * 0.35; // 35% of the smaller dimension
-      const x = centerX + radius * Math.cos(angle);
-      const y = centerY + radius * Math.sin(angle);
-      
-      // Update device position
-      device.x = x - 48; // Adjust for device width
-      device.y = y - 48; // Adjust for device height
+      const deviceCenterX = device.x! + 48; // Add offset to get center
+      const deviceCenterY = device.y! + 48;
+      const isActive = selectedDevice?.id === device.id || animatingDevice?.id === device.id;
       
       const isActive = selectedDevice?.id === device.id || animatingDevice?.id === device.id;
       
@@ -96,14 +70,24 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
           x2={centerX}
           y2={centerY}
           stroke={isActive ? "url(#activeConnectionGradient)" : "url(#connectionGradient)"}
-          strokeWidth={isActive ? "3" : "2"}
+          strokeWidth={isActive ? "4" : "2"}
           strokeDasharray={isActive ? "none" : "5,5"}
+          filter={isActive ? "url(#glow)" : "none"}
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: isActive ? 0.8 : 0.4 }}
+          animate={{ 
+            pathLength: 1,
+            opacity: isActive ? 1 : 0.4,
+            strokeDashoffset: isActive ? [0, 100] : 0
+          }}
           transition={{ 
-            duration: 1.5,
+            duration: isActive ? 1.5 : 1,
             delay: index * 0.2,
-            ease: "easeInOut"
+            ease: "easeInOut",
+            strokeDashoffset: {
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }
           }}
         />
       );

@@ -21,20 +21,18 @@ const DevicePod: React.FC<DevicePodProps> = ({
   style = {}
 }) => {
   const getDeviceIcon = () => {
-    if (device.name.includes('Router') || device.name.includes('Hub')) {
-      return '🔄';
-    } else if (device.name.includes('Server')) {
-      return '🖥️';
+    if (device.type === 'hub') {
+      return '🌐';
     } else {
-      return '💻';
+      return '';
     }
   };
 
   const getStatusColor = () => {
-    if (!device.isOnline) return 'border-red-500 text-red-400';
-    if (isSelected) return 'border-cyber-blue text-cyber-blue';
-    if (isAnimating) return 'border-cyber-green text-cyber-green';
-    return 'border-cyber-purple text-cyber-purple';
+    if (!device.isOnline) return 'border-red-500 text-red-400 from-red-500/20 to-red-900/20';
+    if (isSelected) return 'border-cyber-blue text-cyber-blue from-cyber-blue/20 to-cyber-purple/20';
+    if (isAnimating) return 'border-cyber-green text-cyber-green from-cyber-green/20 to-cyber-blue/20';
+    return 'border-cyber-purple text-cyber-purple from-cyber-purple/20 to-cyber-blue/20';
   };
 
   return (
@@ -52,28 +50,37 @@ const DevicePod: React.FC<DevicePodProps> = ({
       <motion.div
         className={`
           relative w-28 h-32 md:w-36 md:h-40
-          bg-gradient-to-br from-card-bg to-darker-bg
+          bg-gradient-to-br ${getStatusColor()}
           border-2 rounded-xl
-          ${getStatusColor()}
-          ${isSelected ? 'shadow-2xl' : 'shadow-lg'}
+          shadow-lg hover:shadow-2xl
           transition-all duration-300
           flex flex-col items-center justify-center
           backdrop-blur-sm p-1
+          overflow-hidden
         `}
         variants={isSelected ? deviceGlow : {}}
         animate={isSelected ? "animate" : "initial"}
+        whileHover={{
+          scale: 1.05,
+          transition: { duration: 0.2 }
+        }}
       >
         {/* Holographic Background Effect */}
         <div className="absolute inset-0 bg-cyber-grid bg-[size:20px_20px] opacity-10 rounded-xl" />
         
         {/* Device Icon */}
         <motion.div
-          className="text-2xl md:text-3xl mb-1"
+          className="text-2xl md:text-3xl mb-1 relative z-10"
           animate={isAnimating ? { 
             rotate: [0, 360],
-            scale: [1, 1.2, 1]
+            scale: [1, 1.2, 1],
+            filter: ['brightness(1)', 'brightness(1.5)', 'brightness(1)']
           } : {}}
-          transition={{ duration: 1, repeat: isAnimating ? Infinity : 0 }}
+          transition={{
+            duration: 2,
+            repeat: isAnimating ? Infinity : 0,
+            ease: "easeInOut"
+          }}
         >
           {getDeviceIcon()}
         </motion.div>
@@ -102,17 +109,30 @@ const DevicePod: React.FC<DevicePodProps> = ({
 
         {/* Selection Glow */}
         {isSelected && (
-          <motion.div
-            className="absolute inset-0 border-2 border-cyber-blue rounded-xl opacity-75"
-            animate={{
-              boxShadow: [
-                "0 0 10px #00ffff",
-                "0 0 20px #00ffff, 0 0 30px #00ffff",
-                "0 0 10px #00ffff"
-              ]
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
+          <>
+            <motion.div
+              className="absolute inset-0 border-2 border-cyber-blue rounded-xl opacity-75"
+              animate={{
+                boxShadow: [
+                  "0 0 10px #00ffff",
+                  "0 0 20px #00ffff, 0 0 30px #00ffff",
+                  "0 0 10px #00ffff"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute inset-0 bg-cyber-blue/5 rounded-xl"
+              animate={{
+                opacity: [0.05, 0.2, 0.05]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          </>
         )}
       </motion.div>
 
