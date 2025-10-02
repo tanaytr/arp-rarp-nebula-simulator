@@ -58,7 +58,8 @@ const DatabaseModal: React.FC<DatabaseModalProps> = ({
       x: 100 + (editingDevices.length % 3) * 200,
       y: 100 + Math.floor(editingDevices.length / 3) * 200,
       isActive: false,
-      isOnline: true
+      isOnline: true,
+      type: 'computer'
     };
     setEditingDevices(prev => [...prev, newDevice]);
   };
