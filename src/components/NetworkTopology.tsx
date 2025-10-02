@@ -36,8 +36,8 @@ const NetworkTopology: React.FC<NetworkTopologyProps> = ({
       hub.y = centerY - deviceOffset;
     }
 
-    // Place computers in a circle
-    const radius = Math.min(boxWidth, boxHeight) * 0.35; // 35% of the smaller dimension
+    // Place computers in a circle with more spacing
+    const radius = Math.min(boxWidth, boxHeight) * 0.4; // 40% of the smaller dimension
     computers.forEach((device, index) => {
       const angle = (index * 2 * Math.PI) / computers.length - Math.PI / 2; // Start from top
       const x = centerX + radius * Math.cos(angle);
