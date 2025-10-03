@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Packet } from '../types';
+import { Packet          className={`
+          relative w-10 h-10
+          flex items-center justify-center
+          rounded-lg border-2 ${styles.border}
+          bg-gradient-to-br ${styles.gradient}
+          ${styles.glow}
+          backdrop-blur-sm '../types';
 
 interface PacketAnimationProps {
   packet: Packet;

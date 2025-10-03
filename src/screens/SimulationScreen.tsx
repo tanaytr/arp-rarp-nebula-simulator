@@ -23,6 +23,7 @@ const SimulationScreen: React.FC<SimulationScreenProps> = ({ onBackToTitle }) =>
   const [packets, setPackets] = useState<Packet[]>([]);
   const [activities, setActivities] = useState<any[]>([]);
   const [arpCache, setArpCache] = useState<any[]>([]);
+  const [showGuidance, setShowGuidance] = useState<boolean>(true);
   const [simulationState, setSimulationState] = useState<SimulationState>({
     currentMode: null,
     currentStep: 0,
