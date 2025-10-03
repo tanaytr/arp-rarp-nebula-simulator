@@ -11,7 +11,7 @@
   --color-bg-tertiary: 24, 28, 32;
   
   /* UI Colors */
-  --color-hud: 0, 255, 255;  /* Bright cyan for HUD elements */
+  --color-hud: 0, 255, 255; /* Bright cyan for HUD interface elements */
   --color-text-primary: 200, 255, 255; /* Slightly desaturated cyan */
   --color-text-secondary: 160, 200, 200;
   --color-border: 0, 255, 255;
