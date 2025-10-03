@@ -80,6 +80,15 @@ When you're ready, click anywhere or the X button to continue.`,
     setGuidanceMessage(prev => ({ ...prev, isVisible: false }));
   };
 
+  const showGuidance = (title: string, message: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') => {
+    setGuidanceMessage({
+      title,
+      message,
+      type,
+      isVisible: true
+    });
+  };
+
   const addActivity = (type: string, message: string, sourceIP?: string, sourceMAC?: string, targetIP?: string, targetMAC?: string) => {
     const activity = {
       id: `activity-${Date.now()}`,
