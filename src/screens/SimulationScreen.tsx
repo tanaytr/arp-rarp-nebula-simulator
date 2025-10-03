@@ -23,7 +23,6 @@ const SimulationScreen: React.FC<SimulationScreenProps> = ({ onBackToTitle }) =>
   const [packets, setPackets] = useState<Packet[]>([]);
   const [activities, setActivities] = useState<any[]>([]);
   const [arpCache, setArpCache] = useState<any[]>([]);
-  const [showGuidance, setShowGuidance] = useState<boolean>(true);
   const [simulationState, setSimulationState] = useState<SimulationState>({
     currentMode: null,
     currentStep: 0,
@@ -36,6 +35,19 @@ const SimulationScreen: React.FC<SimulationScreenProps> = ({ onBackToTitle }) =>
   });
 
   // Handle post-simulation state
+  const [showDatabase, setShowDatabase] = useState(false);
+  const [guidanceMessage, setGuidanceMessage] = useState<{
+    title: string;
+    message: string;
+    type: 'info' | 'success' | 'warning' | 'error';
+    isVisible: boolean;
+  }>({
+    title: '',
+    message: '',
+    type: 'info',
+    isVisible: false
+  });
+
   useEffect(() => {
     if (simulationState.isComplete) {
       setGuidanceMessage({
@@ -55,27 +67,11 @@ When you're ready, click anywhere or the X button to continue.`,
       });
     }
   }, [simulationState.isComplete]);
-  const [showDatabase, setShowDatabase] = useState(false);
-  const [guidanceMessage, setGuidanceMessage] = useState<{
-    title: string;
-    message: string;
-    type: 'info' | 'success' | 'warning' | 'error';
-    isVisible: boolean;
-  }>({
-    title: '',
-    message: '',
-    type: 'info',
-    isVisible: false
-  });
 
   // Save devices to localStorage whenever they change
   useEffect(() => {
     saveDevicesToStorage(devices);
   }, [devices]);
-
-  const showGuidance = (title: string, message: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') => {
-    setGuidanceMessage({ title, message, type, isVisible: true });
-  };
 
   const hideGuidance = () => {
     if (simulationState.isComplete) {

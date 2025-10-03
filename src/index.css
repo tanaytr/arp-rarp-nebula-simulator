@@ -1,9 +1,85 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --color-cyber-blue: 0 168 255;
+  --color-cyber-accent: 255 0 85;
+  --color-cyber-green: 0 255 159;
+}
 
 body {
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
   background-color: #0D0D0D;
   color: white;
-  font-family: "JetBrains Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at center, rgb(var(--color-cyber-blue) / 0.1) 0%, transparent 70%),
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px, 20px 20px;
+  background-position: center;
+}
+
+.cyber-panel {
+  position: relative;
+  background-color: rgba(8, 8, 8, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.cyber-button {
+  padding: 0.5rem 1rem;
+  background-color: rgb(var(--color-cyber-blue) / 0.2);
+  border: 1px solid rgb(var(--color-cyber-blue) / 0.5);
+  border-radius: 0.25rem;
+  color: rgb(var(--color-cyber-blue));
+  transition: all 300ms ease-in-out;
+}
+
+.cyber-button:hover {
+  background-color: rgb(var(--color-cyber-blue) / 0.3);
+  color: white;
+  box-shadow: 0 0 15px rgb(var(--color-cyber-blue) / 0.5);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgb(var(--color-cyber-blue) / 0.5);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--color-cyber-blue));
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--color-cyber-accent));
+}
+
+@keyframes scanline {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
+}
+
+.scanline {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, rgb(var(--color-cyber-blue) / 0.5), transparent);
+  animation: scanline 3s linear infinite;
 }

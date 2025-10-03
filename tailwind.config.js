@@ -1,26 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        'terminal-green': '#00FF00',
-        'terminal-blue': '#007ACC',
         'cyber-black': '#0D0D0D',
         'cyber-darker': '#080808',
-        'cyber-blue': '#00A8FF',
-        'cyber-accent': '#FF0055',
-        'cyber-yellow': '#FFB800',
-        'cyber-success': '#00FF9F',
-        'cyber-error': '#FF0044',
-        'cyber-warning': '#FFB800',
-        'grid-line': 'rgba(255, 255, 255, 0.05)',
-        'panel-bg': 'rgba(13, 13, 13, 0.8)',
+        'cyber-blue': 'rgb(var(--color-cyber-blue) / <alpha-value>)',
+        'cyber-accent': 'rgb(var(--color-cyber-accent) / <alpha-value>)',
+        'cyber-green': 'rgb(var(--color-cyber-green) / <alpha-value>)',
         'panel-border': 'rgba(255, 255, 255, 0.1)',
-        'glow-blue': 'rgba(0, 168, 255, 0.2)',
-        'glow-red': 'rgba(255, 0, 85, 0.2)',
       },
       fontFamily: {
         'display': ['Rajdhani', 'sans-serif'],
