@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { Device } from '../types';
 import { deviceGlow, scaleIn } from '../utils/animations';
 
@@ -20,11 +20,22 @@ const DevicePod: React.FC<DevicePodProps> = ({
   className = '',
   style = {}
 }) => {
+  const controls = useAnimation();
+
   const getDeviceIcon = () => {
     if (device.type === 'hub') {
-      return '🌐';
+      return (
+        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+          <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/>
+        </svg>
+      );
     } else {
-      return '';
+      return (
+        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+          <path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/>
+        </svg>
+      );
     }
   };
 
