@@ -2,74 +2,217 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@font-face {
+  font-family: 'CyberFont';
+  src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+}
+
 :root {
-  --color-cyber-blue: 0 168 255;
-  --color-cyber-accent: 255 0 85;
-  --color-cyber-green: 0 255 159;
+  --color-cyber-blue: 0, 255, 255;  /* Bright cyan to match screenshot */
+  --color-cyber-dark: 13, 13, 13;
+  --color-cyber-grid: 0, 74, 74;
+  --color-cyber-text: 255, 255, 255;
+  --color-cyber-glow: 0, 255, 255;
 }
 
 body {
   margin: 0;
-  font-family: "JetBrains Mono", monospace;
-  background-color: #0D0D0D;
-  color: white;
+  font-family: 'CyberFont', 'Orbitron', sans-serif;
+  background-color: rgb(var(--color-cyber-dark));
+  color: rgb(var(--color-cyber-text));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at center, rgb(var(--color-cyber-blue) / 0.1) 0%, transparent 70%),
-    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    radial-gradient(circle at center, rgba(var(--color-cyber-blue), 0.1) 0%, transparent 70%),
+    linear-gradient(to right, rgba(var(--color-cyber-grid), 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--color-cyber-grid), 0.3) 1px, transparent 1px);
   background-size: 100% 100%, 20px 20px, 20px 20px;
   background-position: center;
 }
 
 .cyber-panel {
   position: relative;
-  background-color: rgba(8, 8, 8, 0.8);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  background-color: rgba(var(--color-cyber-dark), 0.7);
+  border: 1px solid rgba(var(--color-cyber-blue), 0.3);
+  border-radius: 4px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 0 10px rgba(var(--color-cyber-blue), 0.1),
+    inset 0 0 15px rgba(var(--color-cyber-blue), 0.05);
 }
 
+.cyber-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--color-cyber-blue), 0.5),
+    transparent
+  );
+}
+
+/* Control Hub Styling */
 .cyber-button {
-  padding: 0.5rem 1rem;
-  background-color: rgb(var(--color-cyber-blue) / 0.2);
-  border: 1px solid rgb(var(--color-cyber-blue) / 0.5);
-  border-radius: 0.25rem;
+  background: rgba(var(--color-cyber-blue), 0.1);
+  border: 1px solid rgba(var(--color-cyber-blue), 0.3);
   color: rgb(var(--color-cyber-blue));
-  transition: all 300ms ease-in-out;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-family: 'CyberFont', 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .cyber-button:hover {
-  background-color: rgb(var(--color-cyber-blue) / 0.3);
-  color: white;
-  box-shadow: 0 0 15px rgb(var(--color-cyber-blue) / 0.5);
+  background: rgba(var(--color-cyber-blue), 0.2);
+  box-shadow: 0 0 15px rgba(var(--color-cyber-blue), 0.3);
+  transform: translateY(-1px);
+}
+
+.cyber-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--color-cyber-blue), 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.cyber-button:hover::after {
+  left: 100%;
 }
 
 .text-glow {
-  text-shadow: 0 0 10px rgb(var(--color-cyber-blue) / 0.5);
+  text-shadow: 0 0 10px rgba(var(--color-cyber-blue), 0.5);
 }
 
+/* Tables */
+.cyber-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: rgba(var(--color-cyber-dark), 0.8);
+  border: 1px solid rgba(var(--color-cyber-blue), 0.3);
+  border-radius: 4px;
+}
+
+.cyber-table th {
+  padding: 1rem;
+  background: rgba(var(--color-cyber-blue), 0.1);
+  color: rgb(var(--color-cyber-blue));
+  font-family: 'CyberFont', 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cyber-table td {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(var(--color-cyber-blue), 0.1);
+  font-family: monospace;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #080808;
+  background: rgba(var(--color-cyber-dark), 0.8);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--color-cyber-blue));
-  border-radius: 9999px;
+  background: rgba(var(--color-cyber-blue), 0.5);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(var(--color-cyber-accent));
+  background: rgba(var(--color-cyber-blue), 0.7);
 }
 
+/* Network Visualization */
+.network-line {
+  stroke: rgba(var(--color-cyber-blue), 0.3);
+  stroke-width: 1;
+}
+
+.network-line.active {
+  stroke: rgb(var(--color-cyber-blue));
+  filter: drop-shadow(0 0 8px rgba(var(--color-cyber-blue), 0.5));
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { stroke-opacity: 0.3; }
+  50% { stroke-opacity: 1; }
+  100% { stroke-opacity: 0.3; }
+}
+
+/* Device Pods */
+.device-pod {
+  position: relative;
+  padding: 1.5rem;
+  background: rgba(var(--color-cyber-dark), 0.8);
+  border: 1px solid rgba(var(--color-cyber-blue), 0.3);
+  border-radius: 4px;
+}
+
+.device-pod::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: linear-gradient(45deg, transparent, rgba(var(--color-cyber-blue), 0.3));
+  border-radius: 4px;
+  z-index: -1;
+}
+
+.device-pod:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(var(--color-cyber-blue), 0.2);
+}
+
+/* Activity Log */
+.activity-log {
+  font-family: monospace;
+  line-height: 1.5;
+  padding: 1rem;
+  background: rgba(var(--color-cyber-dark), 0.9);
+  border: 1px solid rgba(var(--color-cyber-blue), 0.3);
+  border-radius: 4px;
+}
+
+.activity-entry {
+  padding: 0.5rem;
+  border-left: 2px solid rgba(var(--color-cyber-blue), 0.3);
+  margin-bottom: 0.5rem;
+}
+
+.activity-entry:hover {
+  border-left-color: rgb(var(--color-cyber-blue));
+  background: rgba(var(--color-cyber-blue), 0.1);
+}
+
+/* Animation Effects */
 @keyframes scanline {
   from { transform: translateY(-100%); }
   to { transform: translateY(100%); }
@@ -80,6 +223,46 @@ body {
   width: 100%;
   height: 2px;
   pointer-events: none;
-  background: linear-gradient(to right, transparent, rgb(var(--color-cyber-blue) / 0.5), transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(var(--color-cyber-blue), 0.5),
+    transparent
+  );
   animation: scanline 3s linear infinite;
+}
+
+/* Title Styles */
+.title {
+  font-family: 'CyberFont', 'Orbitron', sans-serif;
+  color: rgb(var(--color-cyber-blue));
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(var(--color-cyber-blue), 0.5);
+}
+
+/* Status Indicators */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(var(--color-cyber-blue));
+  box-shadow: 0 0 10px rgba(var(--color-cyber-blue), 0.5);
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+/* Protocol Selection */
+.protocol-select {
+  background: rgba(var(--color-cyber-dark), 0.8);
+  border: 1px solid rgba(var(--color-cyber-blue), 0.3);
+  color: rgb(var(--color-cyber-blue));
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-family: 'CyberFont', 'Orbitron', sans-serif;
+}
+
+.protocol-select option {
+  background: rgb(var(--color-cyber-dark));
+  color: rgb(var(--color-cyber-text));
 }

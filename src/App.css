@@ -2,30 +2,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #1a1a2e;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #00ffff;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #00cccc;
-}
-
-/* Custom selection */
-::selection {
-  background: rgba(0, 255, 255, 0.3);
-  color: white;
-}
-
 /* Global styles */
 * {
   box-sizing: border-box;
@@ -39,42 +15,39 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Orbitron', 'Fira Code', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'CyberFont', 'Orbitron', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #0a0a0f;
-  color: white;
+  background-color: rgb(var(--color-cyber-dark));
+  color: rgb(var(--color-cyber-text));
   overflow-x: hidden;
   min-height: 100vh;
-}
-
-.network-visualization {
-  width: 100%;
-  height: 70vh;
-  min-height: 600px;
-  border-bottom: 2px solid rgba(0, 255, 255, 0.3);
   position: relative;
-  overflow: hidden;
-  background: linear-gradient(to bottom, rgba(10, 10, 15, 0.9), rgba(10, 10, 15, 0.7));
 }
 
-.control-section {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Custom selection */
+::selection {
+  background: rgba(var(--color-cyber-blue), 0.3);
+  color: rgb(var(--color-cyber-text));
 }
 
-@media (max-width: 768px) {
-  .network-visualization {
-    height: 60vh;
-    min-height: 400px;
-  }
-  
-  .control-section {
-    padding: 1rem;
-  }
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(var(--color-cyber-dark), 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--color-cyber-blue), 0.5);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--color-cyber-blue), 0.7);
 }
 
 .App {

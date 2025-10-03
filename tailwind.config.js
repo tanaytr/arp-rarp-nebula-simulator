@@ -4,50 +4,50 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'cyber-black': '#0D0D0D',
-        'cyber-darker': '#080808',
-        'cyber-blue': 'rgb(var(--color-cyber-blue) / <alpha-value>)',
-        'cyber-accent': 'rgb(var(--color-cyber-accent) / <alpha-value>)',
-        'cyber-green': 'rgb(var(--color-cyber-green) / <alpha-value>)',
-        'panel-border': 'rgba(255, 255, 255, 0.1)',
+        'cyber': {
+          blue: 'rgb(var(--color-cyber-blue) / <alpha-value>)',
+          dark: 'rgb(var(--color-cyber-dark) / <alpha-value>)',
+          grid: 'rgb(var(--color-cyber-grid) / <alpha-value>)',
+          text: 'rgb(var(--color-cyber-text) / <alpha-value>)',
+        }
       },
       fontFamily: {
-        'display': ['Rajdhani', 'sans-serif'],
-        'mono': ['JetBrains Mono', 'monospace'],
-        'interface': ['Inter', 'sans-serif'],
+        'cyber': ['CyberFont', 'Orbitron', 'sans-serif'],
+        'mono': ['monospace'],
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'grid-pattern': 'linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px)',
+        'cyber-grid': 'linear-gradient(to right, rgba(var(--color-cyber-grid), 0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(var(--color-cyber-grid), 0.3) 1px, transparent 1px)',
+        'cyber-glow': 'radial-gradient(circle at center, rgba(var(--color-cyber-blue), 0.1) 0%, transparent 70%)',
       },
       animation: {
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'pulse-cyber': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'scanline': 'scanline 3s linear infinite',
         'float': 'float 3s ease-in-out infinite',
-        'scan': 'scan 2s ease-in-out infinite',
-        'data-stream': 'data-stream 20s linear infinite',
-        'flicker': 'flicker 0.5s ease-in-out infinite alternate',
+        'glow': 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
-        glow: {
-          '0%': { 
-            boxShadow: '0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 15px #00ffff',
-            textShadow: '0 0 10px #00ffff'
-          },
-          '100%': { 
-            boxShadow: '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff',
-            textShadow: '0 0 20px #00ffff, 0 0 30px #00ffff'
-          }
+        pulse: {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.5 },
+        },
+        scanline: {
+          'from': { transform: 'translateY(-100%)' },
+          'to': { transform: 'translateY(100%)' },
         },
         float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' }
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
         },
-        warp: {
-          '0%': { transform: 'scale(1) rotate(0deg)', opacity: '1' },
-          '50%': { transform: 'scale(1.2) rotate(180deg)', opacity: '0.7' },
-          '100%': { transform: 'scale(1) rotate(360deg)', opacity: '1' }
-        }
+        glow: {
+          '0%': { 
+            boxShadow: '0 0 5px rgba(var(--color-cyber-blue), 0.5)',
+            textShadow: '0 0 5px rgba(var(--color-cyber-blue), 0.5)'
+          },
+          '100%': { 
+            boxShadow: '0 0 20px rgba(var(--color-cyber-blue), 0.8)',
+            textShadow: '0 0 15px rgba(var(--color-cyber-blue), 0.8)'
+          }
+        },
       },
       backgroundImage: {
         'cyber-grid': 'linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.1) 1px, transparent 1px)',
